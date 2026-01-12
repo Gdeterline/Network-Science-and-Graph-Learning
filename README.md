@@ -101,9 +101,9 @@ The figures \ref{fig:degree_distribution_caltech}, \ref{fig:degree_distribution_
     \end{minipage}
 \end{figure}
 
-[[[[[[[[[The figures \ref{fig:degree_distribution_mit}, and \ref{fig:degree_distribution_jhu} both exhibit heavy-tailed distributions, 
+The figures \ref{fig:degree_distribution_mit}, and \ref{fig:degree_distribution_jhu} both exhibit quite steep normal distributions, exhibiting that most nodes are of small degree, while a few others are of higher degree (hubs). In large universities, we can comprehend that as [A COMPLETER]
 
-In contrast, the Caltech network displays a noticeably different structure (figure \ref{fig:degree_distribution_caltech}). As the smallest network in our sample (762 nodes), it is significantly denser than the others, with a much "lighter" right-tail. This high density suggests that the social environment at Caltech is more cohesive, with students likely knowing a larger fraction of their peers compared to larger institutions. Consequently, its degree distribution does not follow the same localized power-law trend as strictly as MIT or Johns Hopkins, reflecting a more homogeneous connectivity pattern where 'low-degree' nodes are less prevalent relative to the network size.]]]]]]]]]
+In contrast, the Caltech network displays a noticeably different structure (figure \ref{fig:degree_distribution_caltech}). As the smallest network in our sample (762 nodes), it is significantly denser than the others, with a bigger proportion of nodes of higher degrees. This high density suggests that the social environment at Caltech is more cohesive, with students likely knowing a larger fraction of their peers compared to the two larger institutions.
 
 
 Given these three networks, we now seek to analyze their graph topologies. Thus, we seek to compute the global clustering coeﬃcient and mean local clustering coeﬃcient for each of the 3 networks. In addition, we compute the edge density of each network. The results are summarized in Table 1.
