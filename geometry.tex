@@ -1,0 +1,17 @@
+\usepackage[a4paper, left=1.5cm, right=1.5cm, top=1.5cm, bottom=1.5cm]{geometry}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{amsmath}
+\let\origfigure\figure
+\let\endorigfigure\endfigure
+\renewenvironment{figure}[1][2] {
+    \expandafter\origfigure\expandafter[H]
+} {
+    \endorigfigure
+}
+\usepackage{tikz} 
+\usetikzlibrary{automata, positioning}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{array}
+\usepackage{tabularx}
