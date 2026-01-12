@@ -101,10 +101,8 @@ The figures \ref{fig:degree_distribution_caltech}, \ref{fig:degree_distribution_
     \end{minipage}
 \end{figure}
 
-The figures \ref{fig:degree_distribution_mit}, and \ref{fig:degree_distribution_jhu} both exhibit quite steep normal distributions, exhibiting that most nodes are of small degree, while a few others are of higher degree (hubs). In large universities, we can comprehend that as [A COMPLETER]
-
+The figures \ref{fig:degree_distribution_mit}, and \ref{fig:degree_distribution_jhu} both exhibit quite steep normal distributions, exhibiting that most nodes are of small degree, while a few others are of higher degree (hubs). This is typical of social networks, where most individuals have a limited number of connections, while a few individuals (hubs) have a significantly larger number of connections, facilitating information flow and connectivity within the network. The phenomenon is similar in big universities, where social circles tend to be smaller and more localized.
 In contrast, the Caltech network displays a noticeably different structure (figure \ref{fig:degree_distribution_caltech}). As the smallest network in our sample (762 nodes), it is significantly denser than the others, with a bigger proportion of nodes of higher degrees. This high density suggests that the social environment at Caltech is more cohesive, with students likely knowing a larger fraction of their peers compared to the two larger institutions.
-
 
 Given these three networks, we now seek to analyze their graph topologies. Thus, we seek to compute the global clustering coeﬃcient and mean local clustering coeﬃcient for each of the 3 networks. In addition, we compute the edge density of each network. The results are summarized in Table 1.
 
@@ -124,10 +122,11 @@ John Hopkins & 0.193161 & 0.268393 & 0.013910 \\
 \centering
 \end{table}
 
-[ANALYSIS TO COMPLETE]
+First of all, all three networks should be construed as \textbf{sparse} when inspecting the table 1. MIT and Johns Hopkins exhibit very low edge densities (${\sim}1.2\%$ and ${\sim}1.4\%$), indicating that the vast majority of possible connections are absent. Caltech, while significantly denser (${\sim}5.6\%$) likely due to its smaller student body and cohesive housing system, still qualifies as sparse in graph-theoretical terms.
+Then, regarding the clustering coefficients, Caltech stands out with the highest global clustering coefficient (0.291283) and mean local clustering coefficient (0.409294). This suggests that students at Caltech tend to form tightly-knit groups/clusters. 
+In contrast, MIT and Johns Hopkins have lower clustering coefficients, indicating a less pronounced tendency for nodes (and thus students) to cluster together. The graph structures of these larger universities may be more fragmented, with students forming smaller, less interconnected social circles.
 
-
-To assess the similarities and differences in local structures across these networks, we scatter plot the degree versus local clustering coeﬃcient for each network node. The resulting plots are shown in Figures \ref{fig:degree_vs_clustering_caltech}, \ref{fig:degree_vs_clustering_mit}, and \ref{fig:degree_vs_clustering_jhu}.
+To assess the similarities and differences in local structures across these networks, we can scatter plot the degree versus the local clustering coeﬃcient for each network node. The resulting plots are shown in Figures \ref{fig:degree_vs_clustering_caltech}, \ref{fig:degree_vs_clustering_mit}, and \ref{fig:degree_vs_clustering_jhu}.
 
 \begin{figure}[H]
     \centering
@@ -151,8 +150,113 @@ To assess the similarities and differences in local structures across these netw
     \end{minipage}
 \end{figure}
 
-[ANALYSIS TO COMPLETE]
+The scatter plots of Degree vs. Local Clustering Coefficient show a consistent pattern across all three networks.
+In each case, nodes with low degrees tend to have high clustering coefficients, forming tight local groups. In contrast, high-degree nodes ("hubs") exhibit low clustering coefficients. This specific "L-shaped" pattern in the scatter plots may indicate that highly connected individuals serve as bridges between different social groups that are not themselves connected, thereby reducing the local clustering around these hubs.
+
+While this pattern is common across all three networks, \textbf{Caltech} still stands out.
+The "cloud" of points for Caltech seems shifted upwards compared to MIT and Johns Hopkins. Even nodes with moderate-to-high degrees at Caltech maintain a relatively higher clustering coefficient than their counterparts in the larger universities. 
+This observation aligns well with the earlier findings regarding Caltech's higher overall clustering coefficients, confirming that its social structure is not only smaller but also more cohesive, where even "popular students", that would only act as bridges in larger networks, belong to highly interconnected internal groups.
+
 
 \section{Question 3: Assortativity Analysis with the Facebook100 Dataset}
 
-In this section, we compute, then analyze the assortativity of all the 100 networks in the Facebook100 dataset.
+In this section, we compute, then analyze the assortativity patterns of all FB100 networks with respect to 5 different vertex attributes: Student/Faculty Status, Major, Vertex Degree, Dormitory and Gender. 
+
+\underline{Note:} To perform this analysis, we considered the networks as simple graphs (i.e., no self-loops or multiple edges).
+
+The summary statistics for the assortativity attributes across all 100 universities are computed for these five key attributes. The table 2 below summarizes the mean, standard deviation, minimum, and maximum assortativity coefficients for each attribute, accross all FB100 networks.
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{lccccc}
+\hline
+Statistic & student\_fac & major & degree & dorm & gender \\
+\hline
+count & 100.000000 & 100.000000 & 100.000000 & 100.000000 & 100.000000 \\
+mean & 0.322738 & 0.051115 & 0.062648 & 0.175106 & 0.042958 \\
+std & 0.092508 & 0.017261 & 0.052845 & 0.057733 & 0.038569 \\
+min & 0.110200 & 0.028574 & -0.065273 & 0.074814 & -0.082493 \\
+25\% & 0.256311 & 0.039919 & 0.025204 & 0.131742 & 0.018481 \\
+50\% & 0.316925 & 0.046796 & 0.064705 & 0.172658 & 0.046710 \\
+75\% & 0.395228 & 0.054907 & 0.092888 & 0.202718 & 0.073286 \\
+max & 0.542625 & 0.131654 & 0.196892 & 0.416017 & 0.124723 \\
+\hline
+\end{tabular}
+\caption{Summary Statistics for Assortativity Coefficients across FB100 Networks}
+\label{Tab:assortativity_summary_statistics}
+\end{table}
+
+We can now analyze the assortativity patterns for each attribute in detail. To further illustrate these patterns, we have, for each attribute, created two types of visualizations:
+\begin{itemize}
+    \item A scatter plot showing the relationship between network size (number of nodes) and assortativity coefficient.
+    \item A histogram displaying the distribution of assortativity coefficients across all FB100 networks.
+\end{itemize}
+
+
+\subsection{Student/Faculty Status}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{images/assortativity_student_fac.png}
+    \caption{Assortativity by Student/Faculty Status vs Network Size and Assortativity Coefficient Distribution}
+    \label{fig:assortativity_student_fac}
+\end{figure}
+
+This attribute exhibits the highest level of assortativity among those measured (mean $\mu \approx 0.32$, with a standard deviation of $\sigma \approx 0.09$). The second plot in figure \ref{fig:assortativity_student_fac} displays a histogram of the assortativity coefficients across all FB100 networks, showing that clear positive skew. Additionally, the scatter plot shows no significant correlation between network size and assortativity by status, but rather a consistent positive assortativity across all institutions.
+This indicates a strong tendency for individuals to associate with others of the same status (e.g., undergraduate with undergraduate, staff with staff, etc.). This is expected as social interactions in a university setting are heavily stratified by role; students share classes, lifestyle patterns, etc., while staff interact in distinct professional settings. This structural homophily is most certainly the dominant demographic driver of clustering in these networks.
+
+
+\subsection{Dorm}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{images/assortativity_dorm.png}
+    \caption{Assortativity by Dormitory vs Network Size and Assortativity Coefficient Distribution}
+    \label{fig:assortativity_dorm}
+\end{figure}
+
+The dormitory residence shows moderate positive assortativity (mean $\mu \approx 0.175$ with a standard deviation of $\sigma \approx 0.058$). The histogram in figure \ref{fig:assortativity_dorm} once again shows a clear positive skew, indicating that most universities exhibit positive assortativity by dormitory. The scatter plot shows the same observation as before: no significant correlation between network size and assortativity by dormitory, but rather a consistent positive assortativity across all institutions. 
+This reflects the significant impact of physical proximity on the formation of social ties within university settings: students living in the same housing unit are naturally more likely to interact daily and become friends. The value is significant but lower than status, suggesting that while housing is a strong catalyst for local community formation, students still form substantial ties outside their immediate living environment (e.g., in classes, clubs, or sports).
+
+
+\subsection{Degree}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{images/assortativity_degree.png}
+    \caption{Assortativity by Degree vs Network Size and Assortativity Coefficient Distribution}
+    \label{fig:assortativity_degree}
+\end{figure}
+
+The degree assortativity is positive but relatively low (mean $\mu \approx 0.06$ with a standard deviation of $\sigma \approx 0.053$). The histogram in figure \ref{fig:assortativity_degree} shows a distribution centered around low positive values, with some networks exhibiting slight disassortativity (negative values). The scatter plot again shows no clear correlation between network size and degree assortativity (or at least a very weak one, that would perhaps require more samples in the lower end to be confirmed). The figure shows that the assortativity coefficients are positive across most institutions, with a few exceptions. The absolute values remain low overall.
+
+This might indicate a slight tendency for high-degree nodes (popular individuals) to connect with other high-degree nodes, and low-degree nodes with other low-degree nodes, though given the low assortativity values, this effect is weak, if not negligible. At least, it suggests that degree-based homophily is not a dominant factor in friendship formation within these collegiate networks.
+
+
+\subsection{Major}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{images/assortativity_major.png}
+    \caption{Assortativity by Academic Major vs Network Size and Assortativity Coefficient Distribution}
+    \label{fig:assortativity_major}
+\end{figure}
+
+The assortativity by academic major is surprisingly low (mean $\mu \approx 0.05$ with a standard deviation of $\sigma \approx 0.017$). The histogram in figure \ref{fig:assortativity_major} shows a distribution tightly clustered around low positive values, indicating that most universities exhibit very weak assortativity by major. The scatter plot again shows no significant correlation between network size and assortativity by major. The scatter plot shows consistence, with all institutions exhibiting low but positive assortativity values.
+This suggests that while shared intellectual interests exist (the assortativity values are low but still positive), they do not dictate the majority of the social structure, with students forming friendships across different fields of study. This result might be the most surprising, as one might expect students to bond over shared majors (and thus classes, projects, etc.). However, it seems that other factors (status, dormitory) play a more significant role in shaping social connections.
+
+\subsection{Gender}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{images/assortativity_gender.png}
+    \caption{Assortativity by Gender vs Network Size and Assortativity Coefficient Distribution}
+    \label{fig:assortativity_gender}
+\end{figure}
+
+Gender exhibits the lowest assortativity (mean $\mu \approx 0.04$ with a standard deviation of $\sigma \approx 0.039$). The histogram in figure \ref{fig:assortativity_gender} shows a distribution slightly skewed towards positive values, but with a significant number of networks exhibiting near-zero or even negative assortativity. If the scatter plot does not show any clear correlation between network size and gender assortativity, we can still observe that all negative values (still very low in absolute terms) are found in larger networks (4000 nodes and more), suggesting a slight trend. Most scatter points remain clustered around low positive values.
+This indicates a nearly neutral mixing in college/university networks, where gender is not a significant barrier or exclusive driver for friendship formation.
+
+Overall, the assortativity analysis across the FB100 networks reveals that \textbf{status} and \textbf{dormitory} are the most influential attributes driving homophily in these social networks, while \textbf{major}, \textbf{degree}, and especially \text{gender} play much smaller roles. This suggests that social stratification by role and physical proximity are the primary factors shaping friendship patterns in collegiate environments.
+
+
