@@ -260,3 +260,10 @@ This indicates a nearly neutral mixing in college/university networks, where gen
 Overall, the assortativity analysis across the FB100 networks reveals that \textbf{status} and \textbf{dormitory} are the most influential attributes driving homophily in these social networks, while \textbf{major}, \textbf{degree}, and especially \text{gender} play much smaller roles. This suggests that social stratification by role and physical proximity are the primary factors shaping friendship patterns in collegiate environments.
 
 
+\section{Question 4: Link prediction}
+
+We will now perform link prediction on a subset of 20 graphs from the FB100 dataset.
+
+To proceed, we have first read the article \textit{The link prediction problem for social networks} by Liben-Nowell, D. \& Kleinberg, J. (Proceedings of the Twelfth International Conference on Information and Knowledge Management, CIKM ’03, 556–559, 2003). Without entering into too much detail, this article presents a comprehensive study of various link prediction algorithms applied to social networks. The authors evaluate several local and global similarity measures to predict future links based on the existing network structure. 
+
+Based on the insights from this article, we implemented three local link prediction metrics: Common Neighbors, Jaccard's Coefficient, and Adamic/Adar. The implementations are available in the \texttt{main.ipynb} notebook of the GitHub repository, and the implementation inherits from the \texttt{LinkPrediction} class defined in the \texttt{link\_prediction.py} file.
