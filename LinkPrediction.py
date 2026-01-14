@@ -54,7 +54,9 @@ class CommonNeighbors(LinkPrediction):
                     neighbors_v = set(self.neighbors(v))
                     score = len(neighbors_u.intersection(neighbors_v))
                     scores[(u, v)] = score
-            bar.update(i)
+            bar.update(i+1)
+        
+        bar.finish()
         
         return scores
 
@@ -82,8 +84,10 @@ class Jaccard(LinkPrediction):
                         score = len(intersection) / len(union)
                     
                     scores[(u, v)] = score
-            bar.update(i)
+            bar.update(i+1)
             
+        bar.finish()
+        
         return scores
 
 class AdamicAdar(LinkPrediction):
@@ -109,6 +113,8 @@ class AdamicAdar(LinkPrediction):
                             score += 1 / np.log(degree)
                             
                     scores[(u, v)] = score
-            bar.update(i)
+            bar.update(i+1)
             
+        bar.finish()
+        
         return scores
