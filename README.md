@@ -262,60 +262,97 @@ Overall, the assortativity analysis across the FB100 networks reveals that \text
 
 \section{Question 4: Link prediction}
 
-We will now perform link prediction on a subset of 20 graphs from the FB100 dataset.
+We will now perform link prediction on a subset of 10 graphs from the FB100 dataset. Due to computational constraints, we have selected the 10 smallest networks in terms of number of file size, to ensure that the link prediction algorithms can run efficiently, and on a significant number of networks. 
 
 To proceed, we have first read the article \textit{The link prediction problem for social networks} by Liben-Nowell, D. \& Kleinberg, J. (Proceedings of the Twelfth International Conference on Information and Knowledge Management, CIKM ’03, 556–559, 2003). Without entering into too much detail, this article presents a comprehensive study of various link prediction algorithms applied to social networks. The authors evaluate several local and global similarity measures to predict future links based on the existing network structure. 
 
 Based on the insights from this article, we implemented three local link prediction metrics: Common Neighbors, Jaccard's Coefficient, and Adamic/Adar. The implementations are available in the \texttt{main.ipynb} notebook of the GitHub repository, and the implementation inherits from the \texttt{LinkPrediction} class defined in the \texttt{link\_prediction.py} file.
 
+First, we will compute the Precision@k and Recall@k for one given network (Caltech), accross different fractions of removed edges (5\%, 10\%, 15\%, and 20\%), and accross different values of k (50, 100, 200, 300, and 400). The results are summarized in the tables 3 and 4 below.
 
 
+| Fraction Removed | Link Predictor | Precision@50 | Precision@100 | Precision@200 | Precision@400 |
+| :---: | :-----------: | :---: | :---: | :---: | :---: |
+| | Common Neighbors | 0.5000 | 0.4600 | 0.3850 | 0.2850 |
+| 0.05 | Jaccard | 0.3000 | 0.2700 | 0.2250 | 0.1775 |
+| | Adamic/Adar | 0.3800 | 0.3500 | 0.3200 | 0.2475 |
+|---|---|---|---|---|---|
+| | Common Neighbors | 0.7000 | 0.5900 | 0.5450 | 0.4525 |
+| 0.1 | Jaccard | 0.4400 | 0.4300 | 0.3800 | 0.3600 |
+| | Adamic/Adar | 0.5800 | 0.5700 | 0.5300 | 0.4125 |
+|---|---|---|---|---|---|
+| | Common Neighbors | 0.7600 | 0.7000 | 0.6800 | 0.5700 |
+| 0.15 | Jaccard | 0.4000 | 0.5000 | 0.4100 | 0.4450 |
+| | Adamic/Adar | 0.7400 | 0.6900 | 0.6700 | 0.5600 |
+|---|---|---|---|---|---|
+| | Common Neighbors | 0.6800 | 0.7600 | 0.7550 | 0.6175 |
+| 0.2 | Jaccard | 0.5200 | 0.5500 | 0.5100 | 0.4925 |
+| | Adamic/Adar | 0.8000 | 0.8100 | 0.7500 | 0.6900 |
 
----
+*Table 3: Link Prediction Results for Caltech Network: Precision@k*
 
-\begin{table}[ht]
-\begin{tabular}{ |c|c|c|c|c|c|c| } 
-\hline
-Fraction Removed & Link Predictor & Precision@50 & Precision@100 & Precision@200 & Precision@300 & Precision@400 \\
-\hline
-\multirow{3}{4em}{0.05} & Common Neighbors & 0.4620 & 0.4020 & 0.3245 & 0.2873 & 0.2627 \\ 
-                        & Jaccard & 0.3360 & 0.3550 & 0.3290 & 0.3077 & 0.2907 \\ 
-                        & Adamic/Adar & 0.4460 & 0.3950 & 0.3230 & 0.2967 & 0.2682 \\ 
-\multirow{3}{4em}{0.1} & Common Neighbors & 0.6320 & 0.5880 & 0.5100 & 0.4710 & 0.4460 \\ 
-                        & Jaccard & 0.4560 & 0.4690 & 0.4730 & 0.4537 & 0.4450 \\ 
-                        & Adamic/Adar & 0.6700 & 0.6160 & 0.5415 & 0.4990 & 0.4635 \\
-\multirow{3}{4em}{0.15} & Common Neighbors & 0.7520 & 0.7120 & 0.6470 & 0.5967 & 0.5582 \\ 
-                        & Jaccard & 0.5080 & 0.5310 & 0.5490 & 0.5393 & 0.5353 \\ 
-                        & Adamic/Adar & 0.7440 & 0.7140 & 0.6565 & 0.6137 & 0.5795 \\
-\multirow{3}{4em}{0.2} & Common Neighbors & 0.8200 & 0.7650 & 0.6985 & 0.6627 & 0.6283 \\ 
-                        & Jaccard & 0.5400 & 0.5540 & 0.5745 & 0.5760 & 0.5755 \\ 
-                        & Adamic/Adar & 0.7740 & 0.7580 & 0.7220 & 0.6843 & 0.6550 \\
-\hline
-\end{tabular}
-\caption{Link Prediction Results: Precision@k for Different Link Predictors and Fractions of Removed Edges}
-\label{Tab:link_prediction_precision}
-\end{table}
+| Fraction Removed | Link Predictor | Recall@50 | Recall@100 | Recall@200 | Recall@400 |
+| :---: | :-----------: | :---: | :---: | :---: | :---: |
+| | Common Neighbors | 0.0300 | 0.0553 | 0.0925 | 0.1370 |
+| 0.05 | Jaccard | 0.0180 | 0.0325 | 0.0541 | 0.0853 |
+| | Adamic/Adar | 0.0228 | 0.0421 | 0.0769 | 0.1190 |
+|---|---|---|---|---|---|
+| | Common Neighbors | 0.0210 | 0.0354 | 0.0655 | 0.1087 |
+| 0.1 | Jaccard | 0.0132 | 0.0258 | 0.0456 | 0.0865 |
+| | Adamic/Adar | 0.0174 | 0.0342 | 0.0637 | 0.0991 |
+|---|---|---|---|---|---|
+| | Common Neighbors | 0.0152 | 0.0280 | 0.0544 | 0.0913 |
+| 0.15 | Jaccard | 0.0080 | 0.0200 | 0.0328 | 0.0713 |
+| | Adamic/Adar | 0.0148 | 0.0276 | 0.0536 | 0.0897 |
+|---|---|---|---|---|---|
+| | Common Neighbors | 0.0102 | 0.0228 | 0.0453 | 0.0742 |
+| 0.2 | Jaccard | 0.0078 | 0.0165 | 0.0306 | 0.0591 |
+| | Adamic/Adar | 0.0120 | 0.0243 | 0.0450 | 0.0829 |
 
-\begin{table}[ht]
-\begin{tabular}{ |c|c|c|c|c|c|c| } 
-\hline
-Fraction Removed & Link Predictor & Recall@50 & Recall@100 & Recall@200 & Recall@300 & Recall@400 \\
-\hline
-\multirow{3}{4em}{0.05} & Common Neighbors & 0.0105 & 0.0184 & 0.0295 & 0.0384 & 0.0464 \\ 
-                        & Jaccard & 0.0067 & 0.0148 & 0.0271 & 0.0383 & 0.0482 \\ 
-                        & Adamic/Adar & 0.0097 & 0.0175 & 0.0279 & 0.0382 & 0.0461 \\ 
-\multirow{3}{4em}{0.1} & Common Neighbors & 0.0072 & 0.0135 & 0.0229 & 0.0316 & 0.0399 \\ 
-                        & Jaccard & 0.0048 & 0.0099 & 0.0201 & 0.0292 & 0.0376 \\ 
-                        & Adamic/Adar & 0.0076 & 0.0139 & 0.0241 & 0.0331 & 0.0411 \\
-\multirow{3}{4em}{0.15} & Common Neighbors & 0.0058 & 0.0110 & 0.0195 & 0.0268 & 0.0330 \\ 
-                        & Jaccard & 0.0035 & 0.0076 & 0.0156 & 0.0233 & 0.0307 \\ 
-                        & Adamic/Adar & 0.0056 & 0.0109 & 0.0200 & 0.0277 & 0.0350 \\
-\multirow{3}{4em}{0.2} & Common Neighbors & 0.0048 & 0.0089 & 0.0160 & 0.0225 & 0.0284 \\ 
-                        & Jaccard & 0.0031 & 0.0064 & 0.0126 & 0.0191 & 0.0254 \\ 
-                        & Adamic/Adar & 0.0049 & 0.0091 & 0.0165 & 0.0232 & 0.0295 \\
-\hline
-\end{tabular}
-\caption{Link Prediction Results: Recall@k for Different Link Predictors and Fractions of Removed Edges}
-\label{Tab:link_prediction_recall}
-\end{table}
+*Table 4: Link Prediction Results for Caltech Network: Recall@k*
+
+The results for the Caltech network indicate that the Common Neighbors and Adamic/Adar predictors generally outperform Jaccard's Coefficient in terms of Precision@k across all fractions of removed edges. This suggests that these two predictors are more effective at identifying true positive links among the top k predictions. Additionally, as the fraction of removed edges increases, the Precision@k values tend to improve for all predictors, for a given k. But as the value of k increases, the Precision@k values tend to decrease for all predictors, for a given fraction of removed edges. This is expected, as taking higher values of k means taking more predictions into account, which increases the likelihood of including false positives.
+On the opposite, the Recall@k values tend to decrease as the fraction of removed edges increases, for a given k. This is also expected, as removing more edges makes it harder for the predictors to recover the missing links. However, as the value of k increases, the Recall@k values tend to increase for all predictors, for a given fraction of removed edges. This is also expected, as taking higher values of k means considering more predictions, which increases the likelihood of capturing true positives.
+
+Then, we compute the average Precision@k and Recall@k for the 10 chosen networks, accross different fractions of removed edges, and accross different values of k. The results are summarized in the tables 5 and 6 below.
+
+| Fraction Removed | Link Predictor | Precision@50 | Precision@100 | Precision@200 | Precision@300 | Precision@400 |
+|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+| | Common Neighbors | 0.4620 | 0.4020 | 0.3245 | 0.2873 | 0.2627 |
+| 0.05 | Jaccard | 0.3360 | 0.3550 | 0.3290 | 0.3077 | 0.2907 |
+| | Adamic/Adar | 0.4460 | 0.3950 | 0.3230 | 0.2967 | 0.2682 |
+|---|---|---|---|---|---|---|
+| | Common Neighbors | 0.6320 | 0.5880 | 0.5100 | 0.4710 | 0.4460 |
+| 0.1 | Jaccard | 0.4560 | 0.4690 | 0.4730 | 0.4537 | 0.4450 |
+| | Adamic/Adar | 0.6700 | 0.6160 | 0.5415 | 0.4990 | 0.4635 |
+|---|---|---|---|---|---|---|
+| | Common Neighbors | 0.7520 | 0.7120 | 0.6470 | 0.5967 | 0.5582 |
+| 0.15 | Jaccard | 0.5080 | 0.5310 | 0.5490 | 0.5393 | 0.5353 |
+| | Adamic/Adar | 0.7440 | 0.7140 | 0.6565 | 0.6137 | 0.5795 |
+|---|---|---|---|---|---|---|
+| | Common Neighbors | 0.8200 | 0.7650 | 0.6985 | 0.6627 | 0.6283 |
+| 0.2 | Jaccard | 0.5400 | 0.5540 | 0.5745 | 0.5760 | 0.5755 |
+| | Adamic/Adar | 0.7740 | 0.7580 | 0.7220 | 0.6843 | 0.6550 |
+
+*Table 5: Link Prediction Results: Average Precision@k for the Different Link Predictors and Fractions of Removed Edges*
+
+| Fraction Removed | Link Predictor | Recall@50 | Recall@100 | Recall@200 | Recall@300 | Recall@400 |
+|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+| | Common Neighbors | 0.0105 | 0.0184 | 0.0295 | 0.0384 | 0.0464 |
+| 0.05 | Jaccard | 0.0067 | 0.0148 | 0.0271 | 0.0383 | 0.0482 |
+| | Adamic/Adar | 0.0097 | 0.0175 | 0.0279 | 0.0382 | 0.0461 |
+|---|---|---|---|---|---|---|
+| | Common Neighbors | 0.0072 | 0.0135 | 0.0229 | 0.0316 | 0.0399 |
+| 0.1 | Jaccard | 0.0048 | 0.0099 | 0.0201 | 0.0292 | 0.0376 |
+| | Adamic/Adar | 0.0076 | 0.0139 | 0.0241 | 0.0331 | 0.0411 |
+|---|---|---|---|---|---|---|
+| | Common Neighbors | 0.0058 | 0.0110 | 0.0195 | 0.0268 | 0.0330 |
+| 0.15 | Jaccard | 0.0035 | 0.0076 | 0.0156 | 0.0233 | 0.0307 |
+| | Adamic/Adar | 0.0056 | 0.0109 | 0.0200 | 0.0277 | 0.0350 |
+|---|---|---|---|---|---|---|
+| | Common Neighbors | 0.0048 | 0.0089 | 0.0160 | 0.0225 | 0.0284 |
+| 0.2 | Jaccard | 0.0031 | 0.0064 | 0.0126 | 0.0191 | 0.0254 |
+| | Adamic/Adar | 0.0049 | 0.0091 | 0.0165 | 0.0232 | 0.0295 |
+
+*Table 6: Link Prediction Results: Average Recall@k for the Different Link Predictors and Fractions of Removed Edges*
 
