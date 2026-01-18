@@ -317,7 +317,7 @@ On the opposite, the Recall@k values tend to decrease as the fraction of removed
 Then, we compute the average Precision@k and Recall@k for the 10 chosen networks, accross different fractions of removed edges, and accross different values of k. The results are summarized in the tables 5 and 6 below.
 
 | Fraction Removed | Link Predictor | Precision@50 | Precision@100 | Precision@200 | Precision@300 | Precision@400 |
-|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+|:---:|:-----------:|:---:|:---:|:---:|:---:|:---:|
 | | Common Neighbors | 0.4620 | 0.4020 | 0.3245 | 0.2873 | 0.2627 |
 | 0.05 | Jaccard | 0.3360 | 0.3550 | 0.3290 | 0.3077 | 0.2907 |
 | | Adamic/Adar | 0.4460 | 0.3950 | 0.3230 | 0.2967 | 0.2682 |
@@ -337,7 +337,7 @@ Then, we compute the average Precision@k and Recall@k for the 10 chosen networks
 *Table 5: Link Prediction Results: Average Precision@k for the Different Link Predictors and Fractions of Removed Edges*
 
 | Fraction Removed | Link Predictor | Recall@50 | Recall@100 | Recall@200 | Recall@300 | Recall@400 |
-|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+|:---:|:-----------:|:---:|:---:|:---:|:---:|:---:|
 | | Common Neighbors | 0.0105 | 0.0184 | 0.0295 | 0.0384 | 0.0464 |
 | 0.05 | Jaccard | 0.0067 | 0.0148 | 0.0271 | 0.0383 | 0.0482 |
 | | Adamic/Adar | 0.0097 | 0.0175 | 0.0279 | 0.0382 | 0.0461 |
@@ -356,3 +356,8 @@ Then, we compute the average Precision@k and Recall@k for the 10 chosen networks
 
 *Table 6: Link Prediction Results: Average Recall@k for the Different Link Predictors and Fractions of Removed Edges*
 
+The overall trends observed in the average results across the 10 networks are consistent with those seen in the Caltech network specifically. Common Neighbors and Adamic/Adar generally outperform Jaccard's Coefficient in terms of Precision@k across all fractions of removed edges. As the fraction of removed edges increases, the Precision@k values tend to improve for all predictors, while the Recall@k values tend to decrease. Additionally, as the value of k increases, the Precision@k values tend to decrease, while the Recall@k values tend to increase for all predictors. These consistent patterns reinforce the effectiveness of Common Neighbors and Adamic/Adar as link prediction methods in social networks, particularly in the context of the FB100 dataset. Should we have to choose one predictor among the three, Adamic/Adar would probably be the best choice, as it often outperforms Common Neighbors by a small (to negligible) margin, while being conceptually more robust. Nevertheless, the choice of predictor may still depend on the specific characteristics of the network being analyzed, as well as the computational resources available: Common Neighbors is computationally less intensive than Adamic/Adar, which may be a consideration for very large networks, or when computational efficiency is a constraint/priority.
+
+\section{Question 5: Find missing labels with the label propagation algorithms}
+
+In this section, we will implement and evaluate a label prediction algorithm, on the same subset of 10 graphs from the FB100 dataset as in Question 4. 
