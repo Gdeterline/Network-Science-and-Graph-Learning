@@ -262,7 +262,8 @@ Overall, the assortativity analysis across the FB100 networks reveals that \text
 
 \section{Question 4: Link prediction}
 
-We will now perform link prediction on a subset of 10 graphs from the FB100 dataset. Due to computational constraints, we have selected the 10 smallest networks in terms of number of file size, to ensure that the link prediction algorithms can run efficiently, and on a significant number of networks. 
+We will now perform link prediction on a subset of 10 graphs from the FB100 dataset. 
+Due to computational constraints, we have selected the 10 smallest networks in terms of number of file size, to ensure that the link prediction algorithms can run efficiently, and on a significant number of networks. These are the following networks: \texttt{Caltech}, \texttt{Reed}, \texttt{Simmons}, \texttt{Haverford}, \texttt{Swarthmore}, \texttt{USFCA}, \texttt{Bowdoin}, \texttt{Mich}, \texttt{Amherst}, and \texttt{Oberlin}.
 
 To proceed, we have first read the article \textit{The link prediction problem for social networks} by Liben-Nowell, D. \& Kleinberg, J. (Proceedings of the Twelfth International Conference on Information and Knowledge Management, CIKM ’03, 556–559, 2003). Without entering into too much detail, this article presents a comprehensive study of various link prediction algorithms applied to social networks. The authors evaluate several local and global similarity measures to predict future links based on the existing network structure. 
 
@@ -289,7 +290,7 @@ First, we will compute the Precision@k and Recall@k for one given network (Calte
 | 0.2 | Jaccard | 0.5200 | 0.5500 | 0.5100 | 0.4925 |
 | | Adamic/Adar | 0.8000 | 0.8100 | 0.7500 | 0.6900 |
 
-*Table 3: Link Prediction Results for Caltech Network: Precision@k*
+\textit{Table 3: Link Prediction Results for Caltech Network: Precision@k}
 
 | Fraction Removed | Link Predictor | Recall@50 | Recall@100 | Recall@200 | Recall@400 |
 | :---: | :-----------: | :---: | :---: | :---: | :---: |
@@ -309,7 +310,7 @@ First, we will compute the Precision@k and Recall@k for one given network (Calte
 | 0.2 | Jaccard | 0.0078 | 0.0165 | 0.0306 | 0.0591 |
 | | Adamic/Adar | 0.0120 | 0.0243 | 0.0450 | 0.0829 |
 
-*Table 4: Link Prediction Results for Caltech Network: Recall@k*
+\textit{Table 4: Link Prediction Results for Caltech Network: Recall@k}
 
 The results for the Caltech network indicate that the Common Neighbors and Adamic/Adar predictors generally outperform Jaccard's Coefficient in terms of Precision@k across all fractions of removed edges. This suggests that these two predictors are more effective at identifying true positive links among the top k predictions. Additionally, as the fraction of removed edges increases, the Precision@k values tend to improve for all predictors, for a given k. But as the value of k increases, the Precision@k values tend to decrease for all predictors, for a given fraction of removed edges. This is expected, as taking higher values of k means taking more predictions into account, which increases the likelihood of including false positives.
 On the opposite, the Recall@k values tend to decrease as the fraction of removed edges increases, for a given k. This is also expected, as removing more edges makes it harder for the predictors to recover the missing links. However, as the value of k increases, the Recall@k values tend to increase for all predictors, for a given fraction of removed edges. This is also expected, as taking higher values of k means considering more predictions, which increases the likelihood of capturing true positives.
@@ -334,7 +335,10 @@ Then, we compute the average Precision@k and Recall@k for the 10 chosen networks
 | 0.2 | Jaccard | 0.5400 | 0.5540 | 0.5745 | 0.5760 | 0.5755 |
 | | Adamic/Adar | 0.7740 | 0.7580 | 0.7220 | 0.6843 | 0.6550 |
 
-*Table 5: Link Prediction Results: Average Precision@k for the Different Link Predictors and Fractions of Removed Edges*
+
+\textit{Table 5: Link Prediction Results: Average Precision@k for the Different Link Predictors and Fractions of Removed Edges}
+
+
 
 | Fraction Removed | Link Predictor | Recall@50 | Recall@100 | Recall@200 | Recall@300 | Recall@400 |
 |:---:|:-----------:|:---:|:---:|:---:|:---:|:---:|
@@ -354,7 +358,8 @@ Then, we compute the average Precision@k and Recall@k for the 10 chosen networks
 | 0.2 | Jaccard | 0.0031 | 0.0064 | 0.0126 | 0.0191 | 0.0254 |
 | | Adamic/Adar | 0.0049 | 0.0091 | 0.0165 | 0.0232 | 0.0295 |
 
-*Table 6: Link Prediction Results: Average Recall@k for the Different Link Predictors and Fractions of Removed Edges*
+\textit{Table 6: Link Prediction Results: Average Recall@k for the Different Link Predictors and Fractions of Removed Edges}
+
 
 The overall trends observed in the average results across the 10 networks are consistent with those seen in the Caltech network specifically. Common Neighbors and Adamic/Adar generally outperform Jaccard's Coefficient in terms of Precision@k across all fractions of removed edges. As the fraction of removed edges increases, the Precision@k values tend to improve for all predictors, while the Recall@k values tend to decrease. Additionally, as the value of k increases, the Precision@k values tend to decrease, while the Recall@k values tend to increase for all predictors. These consistent patterns reinforce the effectiveness of Common Neighbors and Adamic/Adar as link prediction methods in social networks, particularly in the context of the FB100 dataset. Should we have to choose one predictor among the three, Adamic/Adar would probably be the best choice, as it often outperforms Common Neighbors by a small (to negligible) margin, while being conceptually more robust. Nevertheless, the choice of predictor may still depend on the specific characteristics of the network being analyzed, as well as the computational resources available: Common Neighbors is computationally less intensive than Adamic/Adar, which may be a consideration for very large networks, or when computational efficiency is a constraint/priority.
 
@@ -365,8 +370,48 @@ In this section, we will implement and evaluate a label prediction algorithm, on
 To proceed, we first started by reading the article \textit{Node Classiﬁcation in Social Networks} by Bhagat, S., Cormode, G. \& Muthukrishnan, S. (In Social Network Data Analytics, 115–148, Springer US, 2011). The article provides a comprehensive overview of various node classification techniques in social networks, including label propagation algorithms. The authors consider methods based on iterative application of traditional classifiers using graph information as features, and methods which propagate the existing labels via random walks.
 Based on the insights from this article, and on the class material, we implemented a semi-supervised label propagation algorithm, that leverages the graph structure to infer missing labels based on the known labels of neighboring nodes. The implementation is available in the \texttt{src/LabelPropagation.py} file of the GitHub repository.
 
-We evaluated the performance of our label propagation algorithm using three metrics: Accuracy, F1-Score, and Mean Absolute Error (MAE).
-We first considered a single network (Caltech), and evaluated the performance of the label propagation algorithm accross different fractions of removed labels (10\%, 20\%, 30\%) and accross different node attributes ("dorm", "major", and "gender"). The results are summarized in the table 7 below.
+We evaluated the performance of our label propagation algorithm using three metrics: Accuracy, F1-Score.
+We first considered a single network (MIT), and evaluated the performance of the label propagation algorithm accross different fractions of removed labels (10\%, 20\%, 30\%) and accross different node attributes ("dorm", "major", and "gender"). The results are summarized in the table 7 below.
+
+| attribute   |   fraction\_removed |   accuracy |   f1\_score |
+|:------------:|:-------------------:|:-----------:|:-----------:|
+| |                0.1 |   0.545 |  0.453  |
+| dorm        |               0.2 |   0.515 |  0.428  |
+| |                0.3 |   0.404 |  0.265  |
+|---|---|---|---|
+| |                0.1 |   0.247 |  0.068  |
+| major       |                0.2 |   0.235 |  0.070  |
+| |                0.3 |   0.236 |  0.054  |
+|---|---|---|---|
+| |                0.1 |   0.627 |  0.441   |
+| gender      |                0.2 |   0.625    |  0.447  |
+| |                0.3 |   0.626 |  0.437  |
+
+\textit{Table 7: Label Propagation Results for MIT Network}
+
+The results for the MIT network indicate that the label propagation algorithm performs best when predicting the "gender" attribute, achieving the highest accuracy and F1-score across all fractions of removed labels. The "dorm" attribute also shows moderate performance, while the "major" attribute yields the lowest accuracy and F1-score. This suggests that certain attributes are perhaps better suited for label propagation based on the underlying social structure of the network. Additionally, as the fraction of removed labels increases, both accuracy and F1-score tend to decrease for all attributes, which is expected as more missing labels make the prediction task more challenging.
+
+Then, we computed the average accuracy and F1-score accross the 10 chosen networks, accross the same fractions of removed labels, and accross the same node attributes. The results are summarized in the table 8 below.
 
 
+| attribute   |   fraction\_removed |   average\_accuracy |   average\_f1\_score |
+|:------------:|:-------------------:|:-------------------:|:-------------------:|
+| |                0.1 |              0.563 |              0.257 |
+| dorm        |                0.2 |              0.552 |              0.232 |
+| |                0.3 |              0.533 |              0.22  |
+|---|---|---|---|
+| |                0.1 |              0.273 |              0.092 |
+| major |                0.2 |              0.229 |              0.053 |
+| |                0.3 |              0.204 |              0.033 |
+|---|---|---|---|
+| |                0.1 |              0.612 |              0.357 |
+| gender      |                0.2 |              0.623 |              0.346 |
+| |                0.3 |              0.607 |              0.32  |
 
+\textit{Table 8: Label Propagation Results: Average Accuracy and F1-Score for the Different Attributes and Fractions of Removed Labels}
+
+The overall trends observed in the average results across the 10 networks are consistent with those seen in the MIT network specifically. The label propagation algorithm performs best when predicting the "gender" attribute, achieving the highest average accuracy and F1-score across all fractions of removed labels. The "dorm" attribute also shows moderate performance, while the "major" attribute delivers the lowest average accuracy and F1-score. These patterns reinforce the effectiveness of label propagation for certain attributes in social networks, particularly in the context of the FB100 dataset. 
+
+These considerations are perhaps correlated to the assortativity analysis performed in Question 3: attributes with higher assortativity (e.g., gender, dorm) tend to yield better label propagation performance, as nodes with similar attributes are more likely to be connected, facilitating the spread of labels through the network. Conversely, attributes with lower assortativity (e.g., major) may not benefit as much from the network structure, leading to poorer prediction performance. 
+
+\section{Question 6. Communities detection with the FB100 datasets}
