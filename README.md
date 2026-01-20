@@ -362,5 +362,11 @@ The overall trends observed in the average results across the 10 networks are co
 
 In this section, we will implement and evaluate a label prediction algorithm, on the same subset of 10 graphs from the FB100 dataset as in Question 4. 
 
-To proceed, we first started by reading the article \textit{
-Node Classiﬁcation in Social Networks} by Bhagat, S., Cormode, G. \& Muthukrishnan, S. (In Social Network Data Analytics, 115–148, Springer US, 2011).
+To proceed, we first started by reading the article \textit{Node Classiﬁcation in Social Networks} by Bhagat, S., Cormode, G. \& Muthukrishnan, S. (In Social Network Data Analytics, 115–148, Springer US, 2011). The article provides a comprehensive overview of various node classification techniques in social networks, including label propagation algorithms. The authors consider methods based on iterative application of traditional classifiers using graph information as features, and methods which propagate the existing labels via random walks.
+Based on the insights from this article, and on the class material, we implemented a semi-supervised label propagation algorithm, that leverages the graph structure to infer missing labels based on the known labels of neighboring nodes. The implementation is available in the \texttt{src/LabelPropagation.py} file of the GitHub repository.
+
+We evaluated the performance of our label propagation algorithm using three metrics: Accuracy, F1-Score, and Mean Absolute Error (MAE).
+We first considered a single network (Caltech), and evaluated the performance of the label propagation algorithm accross different fractions of removed labels (10\%, 20\%, 30\%) and accross different node attributes ("dorm", "major", and "gender"). The results are summarized in the table 7 below.
+
+
+
