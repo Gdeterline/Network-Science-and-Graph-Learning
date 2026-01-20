@@ -25,7 +25,9 @@
 
 \section{Abstract}
 
-This report includes the answers to my homework for the final project of the Network Science and Graph Learning course. The code used to perform the analysis is available in the GitHub repository: \url{https://github.com/Gdeterline/Network-Science-and-Graph-Learning}.
+This report includes the answers to my homework for the final project of the Network Science and Graph Learning course. The code used to perform the analysis is available in the GitHub repository: 
+
+\url{https://github.com/Gdeterline/Network-Science-and-Graph-Learning}.
 
 \section{Introduction}
 
