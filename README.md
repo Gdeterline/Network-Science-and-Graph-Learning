@@ -415,3 +415,39 @@ The overall trends observed in the average results across the 10 networks are co
 These considerations are perhaps correlated to the assortativity analysis performed in Question 3: attributes with higher assortativity (e.g., gender, dorm) tend to yield better label propagation performance, as nodes with similar attributes are more likely to be connected, facilitating the spread of labels through the network. Conversely, attributes with lower assortativity (e.g., major) may not benefit as much from the network structure, leading to poorer prediction performance. 
 
 \section{Question 6. Communities detection with the FB100 datasets}
+
+In this section, we seek to detect communities in the FB100 networks. Indeed, here we ask ourselves whether there are meaningful communities based on the topology of the graphs in these social networks, and if so, how they relate to the known attributes of the nodes (students), such as dormitory, or faculty status.
+
+To proceed, we implemented two community detection algorithms:
+\begin{itemize}
+    \item The Greedy Modularity method, which is a hierarchical agglomerative algorithm that builds communities by iteratively merging pairs of communities that result in the largest increase in modularity. 
+    \item The Louvain method for community detection, which is a popular algorithm for identifying communities in large networks by optimizing modularity (measure of the density of links inside communities compared to links between communities). 
+\end{itemize}
+
+The implementation is available in the \texttt{src/CommunityDetection.py} file of the GitHub repository.
+
+Here, we make the hypothesis that communities detected via the Louvain method will correspond to meaningful social groupings within the university networks, such as students living in the same dormitory or belonging to the same faculty status (undergraduate, graduate, staff, etc.). Should this hypothesis hold true, it would suggest that the structural properties of the networks reflect real-world social dynamics. On the contrary, if no such correspondence is found, it may indicate that other factors (not captured by the network structure) play a more significant role in shaping social groupings.
+
+To evaluate this hypothesis, we applied both community detection algorithms to two graphs: the Caltech and Johns Hopkins networks. We chose these two networks due to their contrasting sizes and structures, which may yield different insights into community formation.
+
+For each detected community, we computed the NMI (Normalized Mutual Information) and ARI (Adjusted Rand Index) scores between the detected communities and the known attributes of the nodes (dormitory and faculty status). The results are summarized in the table 9 below.
+
+|    Network    |     Attribute    |     Algorithm     |   NMI Score  |   ARI Score  |
+|:-------------:|:----------------:|:-----------------:|:------------:|:------------:|
+| Caltech       | dorm             | Louvain           |    0.699     |    0.703     |
+| Caltech       | dorm             | Greedy Modularity |    0.412     |    0.272     |
+| Caltech       | faculty\_status  | Louvain           |    0.046     |    0.007     |
+| Caltech       | faculty\_status  | Greedy Modularity |    0.062     |    0.044     |
+| Johns Hopkins | dorm             | Louvain           |    0.260     |    0.087     |
+| Johns Hopkins | dorm             | Greedy Modularity |    0.104     |    0.015     |
+| Johns Hopkins | faculty\_status  | Louvain           |    0.110     |    0.039     |
+| Johns Hopkins | faculty\_status  | Greedy Modularity |    0.063     |    0.036     |
+
+\textit{Table 9: Community Detection Results: NMI and ARI Scores for Caltech and Johns Hopkins Networks}
+
+First of all, the results seem to indicate that the Louvain method generally outperforms the Greedy Modularity method in terms of both NMI and ARI scores across all attributes and networks, though the margin of improvement varies. For instance, in the Caltech network, the Louvain method achieves significantly higher NMI and ARI scores for the "dorm" attribute compared to the Greedy Modularity method, while it is much less pronounced for the "faculty status" attribute. This suggests that the Louvain method may be more effective at capturing community structures that align with certain attributes.
+Secondly, the "dorm" attribute consistently returns higher NMI and ARI scores compared to the "faculty status" attribute across both networks and algorithms. This indicates that communities detected based on network topology are more closely related to dormitory residence than to faculty status. This finding aligns with the earlier assortativity analysis, which showed higher assortativity for dormitory compared to faculty status. Additionnally, regarding the dorm attribute, the Caltech network exhibits notably higher NMI and ARI scores compared to the Johns Hopkins network, particularly with the Louvain method. This suggests that the community structures in the Caltech network are more strongly aligned with dormitory residence than in the Johns Hopkins network. We had previously observed that Caltech had a more cohesive social structure, which may contribute (or at least be correlated) to this stronger alignment between detected communities and dormitory residence.
+
+\section{Conclusion}
+
+In this project, we had the opportunity to explore various aspects of social network analysis using the FB100 dataset. We began by examining fundamental network properties, such as degree distributions and clustering coefficients, revealing insights into the structural characteristics of university social networks. Our analysis highlighted the unique social dynamics at Caltech compared to larger institutions like MIT and Johns Hopkins. We then dove deeper into assortativity patterns, uncovering how attributes like status and dormitory residence significantly influence social connections. Our link prediction experiments demonstrated the effectiveness of local similarity measures, particularly Common Neighbors and Adamic/Adar, in recovering missing links. Finally, we explored label propagation techniques for inferring missing node attributes and employed community detection algorithms to identify meaningful social groupings within the networks. Overall, this project was the opportunity for me to apply a range of network analysis techniques discussed in class and gain deeper knowledge in that matter.
