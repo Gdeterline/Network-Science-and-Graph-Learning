@@ -361,3 +361,6 @@ The overall trends observed in the average results across the 10 networks are co
 \section{Question 5: Find missing labels with the label propagation algorithms}
 
 In this section, we will implement and evaluate a label prediction algorithm, on the same subset of 10 graphs from the FB100 dataset as in Question 4. 
+
+To proceed, we first started by reading the article \textit{
+Node Classiﬁcation in Social Networks} by Bhagat, S., Cormode, G. \& Muthukrishnan, S. (In Social Network Data Analytics, 115–148, Springer US, 2011).
